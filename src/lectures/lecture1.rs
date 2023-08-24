@@ -1,6 +1,6 @@
 use std::vec::Vec;
 
-pub fn main() {
+fn main() {
     const COUNT: usize = 100;
     let mut result = Vec::with_capacity(COUNT);
     for i in 1..=COUNT {
