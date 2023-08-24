@@ -25,8 +25,6 @@ struct SmartHouse {
     rooms: HashMap<String, Room>,
 }
 
-
-
 impl SmartHouse {
     fn new(name: String) -> Self {
         SmartHouse {
@@ -85,11 +83,15 @@ impl SmartHouse {
             if let Some(devices_in_room) = self.get_devices_in_room(room_name) {
                 if !devices_in_room.is_empty() {
                     any_device_found = true;
-                    let devices_str = devices_in_room.iter().map(|s| s.to_string()).collect::<Vec<String>>().join(", ");
+                    let devices_str = devices_in_room
+                        .iter()
+                        .map(|s| s.to_string())
+                        .collect::<Vec<String>>()
+                        .join(", ");
                     report.push_str(&format!("Devices: {}\n", devices_str));
                 }
             }
-            
+
             for device_name in &room.devices {
                 if let Some(device_info) = info.get_info(room_name, device_name) {
                     any_device_found = true;
@@ -99,7 +101,7 @@ impl SmartHouse {
 
             report.push('\n');
         }
-        
+
         if !any_device_found {
             report.push_str("No devices found in any room.\n");
         }
@@ -189,9 +191,17 @@ impl<'a, 'b> DeviceInfoProvider for BorrowingDeviceInfoProvider<'a, 'b> {
     }
 }
 
-fn get_full_device_info(room: &str,device: &str, devices: HashMap<&str, &dyn Device>) -> Option<String> {
+fn get_full_device_info(
+    room: &str,
+    device: &str,
+    devices: HashMap<&str, &dyn Device>,
+) -> Option<String> {
     let dev = devices.get(device)?;
-    Some(format!("Full info of device in Room {} - {}", room, dev.report()))
+    Some(format!(
+        "Full info of device in Room {} - {}",
+        room,
+        dev.report()
+    ))
 }
 
 pub fn main() {
@@ -238,5 +248,4 @@ pub fn main() {
     for (room_name, devices) in &all_devices_by_room {
         println!("Devices in {}: {:?}", room_name, devices);
     }
-
 }
