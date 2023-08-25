@@ -1,5 +1,5 @@
-mod lectures;
+mod hw4;
 
 fn main() {
-    lectures::lecture8::main();
+    hw4::main::main();
 }
