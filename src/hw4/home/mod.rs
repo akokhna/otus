@@ -36,7 +36,7 @@ impl SmartHouse {
 
     fn get_devices_in_room(&self, room_name: &str) -> Option<&HashSet<String>> {
         if let Some(room) = self.rooms.get(room_name) {
-            Some(&room.get_devices())
+            Some(room.get_devices())
         } else {
             None
         }
